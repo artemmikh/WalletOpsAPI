@@ -11,7 +11,7 @@ app = FastAPI(
 main_router = APIRouter(prefix=f'/api/v{settings.api_version}')
 main_router.include_router(
     wallet_router,
-    prefix='/wallet',
+    prefix='/wallets',
     tags=['Wallet Operations'])
 
 app.include_router(main_router)
