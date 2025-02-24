@@ -1,3 +1,4 @@
+import uvicorn
 from fastapi import APIRouter
 from fastapi import FastAPI
 
@@ -21,7 +22,12 @@ app.include_router(main_router)
 
 @app.on_event("startup")
 async def on_startup():
-    # временная функция до создания механизама миграций
+    # временная функция до создания механизма миграций
     """Создание таблиц при старте приложения."""
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
+
+
+if __name__ == '__main__':
+    # для запуска приложения в debug режиме
+    uvicorn.run('main:app', reload=True)
