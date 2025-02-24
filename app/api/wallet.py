@@ -3,6 +3,6 @@ from fastapi import APIRouter
 router = APIRouter()
 
 
-@router.get('/test')
-async def test_app():
-    return 'test'
+@router.get('/{WALLET_UUID}')
+async def test_app(WALLET_UUID):
+    return WALLET_UUID
