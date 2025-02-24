@@ -28,8 +28,8 @@ class CRUDWallet:
             session: AsyncSession,
     ):
         wallet = await session.execute(
-            select(Wallet).where(
-                Wallet.uuid == uuid
+            select(self.model).where(
+                self.model.uuid == uuid
             )
         )
         return wallet.scalars().first()
