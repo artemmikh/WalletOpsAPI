@@ -22,6 +22,18 @@ class CRUDWallet:
         )
         return db_obj.scalars().first()
 
+    async def get_by_uuid(
+            self,
+            uuid: int,
+            session: AsyncSession,
+    ):
+        wallet = await session.execute(
+            select(Wallet).where(
+                Wallet.uuid == uuid
+            )
+        )
+        return wallet.scalars().first()
+
     async def create(
             self,
             obj_in,
