@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.api.validators import check_wallet_exists
 from app.core.db import get_async_session
-from app.crud.wallet import wallet_crud
 from app.schemas.wallet import WalletDB
 
 router = APIRouter()
@@ -13,7 +13,8 @@ router = APIRouter()
     response_model=WalletDB
 )
 async def get_wallet_balance(
-        WALLET_UUID,
+        wallet_uuid,
         session: AsyncSession = Depends(get_async_session)
 ):
-    return await wallet_crud.get_by_uuid(WALLET_UUID, session)
+    wallet = await check_wallet_exists(wallet_uuid, session)
+    return wallet
