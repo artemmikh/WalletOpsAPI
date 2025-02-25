@@ -9,7 +9,7 @@ from app.models.wallet import Wallet  # noqa
 
 app = FastAPI(
     title=settings.app_title,
-    description=settings.description)
+    description=settings.app_description)
 
 main_router = APIRouter(prefix=f'/api/v{settings.api_version}')
 main_router.include_router(
