@@ -18,7 +18,7 @@ class OperationType(str, Enum):
 
 
 class WalletOperation(BaseModel):
-    operationType: OperationType
+    operation_type: OperationType
     amount: float
 
     class Config:

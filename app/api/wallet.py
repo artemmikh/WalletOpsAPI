@@ -32,5 +32,5 @@ async def change_wallet_balance(
         session: AsyncSession = Depends(get_async_session)
 ):
     wallet = await check_wallet_exists(wallet_uuid, session)
-    if operation.operationType == 'WITHDRAW':
+    if operation.operation_type == 'WITHDRAW':
         await check_wallet_balance(operation.amount, wallet)
