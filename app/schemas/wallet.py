@@ -28,7 +28,7 @@ class WalletOperation(BaseModel):
                     'summary': 'Пополнение баланса',
                     'description': 'Операция пополнения кошелька.',
                     'value': {
-                        'operationType': 'DEPOSIT',
+                        'operation_type': 'DEPOSIT',
                         'amount': 1000
                     }
                 },
