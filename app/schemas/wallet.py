@@ -3,7 +3,7 @@ from pydantic import BaseModel
 
 class WalletDB(BaseModel):
     id: int
-    uuid: int
+    uuid: str
     balance: int
 
     class Config:

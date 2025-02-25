@@ -1,8 +1,16 @@
-from sqlalchemy import Column, Integer, Float
+import uuid
+
+from sqlalchemy import Column, String, Float
 
 from app.core.db import Base
 
 
 class Wallet(Base):
-    uuid = Column(Integer, nullable=False, unique=True)
-    balance = Column(Float, nullable=False, default=0)
+    uuid = Column(
+        String(36),
+        primary_key=True,
+        default=lambda: str(uuid.uuid4()))
+    balance = Column(
+        Float,
+        nullable=False,
+        default=0)
