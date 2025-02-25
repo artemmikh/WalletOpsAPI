@@ -36,7 +36,7 @@ class WalletOperation(BaseModel):
                     'summary': 'Снятие средств',
                     'description': 'Операция списания средств с кошелька.',
                     'value': {
-                        'operationType': 'WITHDRAW',
+                        'operation_type': 'WITHDRAW',
                         'amount': 500
                     }
                 }
