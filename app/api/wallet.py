@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, Body
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.api.validators import check_wallet_exists
+from app.api.validators import check_wallet_exists, check_wallet_balance
 from app.core.db import get_async_session
 from app.schemas.wallet import WalletDB, WalletOperation
 
@@ -31,4 +31,6 @@ async def change_wallet_balance(
         ),
         session: AsyncSession = Depends(get_async_session)
 ):
-    return 'ok'
+    wallet = await check_wallet_exists(wallet_uuid, session)
+    if operation.operationType == 'WITHDRAW':
+        await check_wallet_balance(operation.amount, wallet)

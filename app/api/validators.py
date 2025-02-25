@@ -20,3 +20,13 @@ async def check_wallet_exists(
             detail='Кошелёк не найден!'
         )
     return wallet
+
+
+async def check_wallet_balance(amount: float, wallet: Wallet):
+    wallet_balance = wallet.balance
+    if wallet_balance - amount < 0:
+        raise HTTPException(
+            status_code=HTTPStatus.BAD_REQUEST,
+            detail=f'Не хватает средств для снятия. '
+                   f'Баланс кошелька: {wallet_balance}'
+        )
