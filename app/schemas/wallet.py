@@ -18,7 +18,7 @@ class OperationType(str, Enum):
 
 
 class WalletOperation(BaseModel):
-    operation_type: OperationType
+    operationType: OperationType
     amount: float
 
     class Config:
@@ -28,7 +28,7 @@ class WalletOperation(BaseModel):
                     'summary': 'Пополнение баланса',
                     'description': 'Операция пополнения кошелька.',
                     'value': {
-                        'operation_type': 'DEPOSIT',
+                        'operationType': 'DEPOSIT',
                         'amount': 1000
                     }
                 },
@@ -36,7 +36,7 @@ class WalletOperation(BaseModel):
                     'summary': 'Снятие средств',
                     'description': 'Операция списания средств с кошелька.',
                     'value': {
-                        'operation_type': 'WITHDRAW',
+                        'operationType': 'WITHDRAW',
                         'amount': 500
                     }
                 }

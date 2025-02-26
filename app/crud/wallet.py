@@ -53,9 +53,9 @@ class CRUDWallet:
             session: AsyncSession,
     ):
 
-        if obj_in.operation_type == 'DEPOSIT':
+        if obj_in.operationType == 'DEPOSIT':
             new_balance = db_obj.balance + obj_in.amount
-        if obj_in.operation_type == 'WITHDRAW':
+        if obj_in.operationType == 'WITHDRAW':
             new_balance = db_obj.balance - obj_in.amount
 
         setattr(db_obj, 'balance', new_balance)
