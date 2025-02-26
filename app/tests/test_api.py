@@ -27,7 +27,7 @@ async def test_wallet_balance_not_found(
         client: AsyncClient
 ):
     """Тест на получение баланса несуществующего кошелька."""
-    non_existent_uuid = "00000000-0000-0000-0000-000000000000"
+    non_existent_uuid = '00000000-0000-0000-0000-000000000000'
     response = await client.get(f'{api_url}/{non_existent_uuid}')
     assert response.status_code == 404
     assert response.json() == {
