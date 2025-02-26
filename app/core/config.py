@@ -10,6 +10,7 @@ class Settings(BaseSettings):
     app_description: str = ('Приложение для управления '
                             'балансами виртуальных кошельков.')
     database_url: str = 'sqlite+aiosqlite:///./wallet.db'
+    test_database_url: str = 'sqlite+aiosqlite:///:memory:'
 
     class Config:
         env_file = '.env'
