@@ -5,7 +5,7 @@ from app.models.wallet import Wallet
 
 
 @pytest.mark.asyncio
-async def test_wallet_balance(
+async def test_get_wallet_balance(
         api_url: str,
         client: AsyncClient,
         test_wallet,
@@ -22,7 +22,7 @@ async def test_wallet_balance(
 
 
 @pytest.mark.asyncio
-async def test_wallet_balance_not_found(
+async def test_get_wallet_balance_not_found(
         api_url: str,
         client: AsyncClient
 ):
