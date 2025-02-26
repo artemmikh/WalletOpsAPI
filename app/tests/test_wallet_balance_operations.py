@@ -38,7 +38,7 @@ async def test_withdraw_wallet_not_found(
 ):
     """Тест на снятие средств не существующего кошелька."""
     response = await client.post(
-        f'{api_url}/"00000000-0000-0000-0000-000000000000"/operation',
+        f'{api_url}/00000000-0000-0000-0000-000000000000/operation',
         json={
             "operationType": "WITHDRAW",
             "amount": 1
@@ -69,4 +69,48 @@ async def test_withdraw_wallet_insufficient_balance(
     assert response.json() == {
         "detail": f'Не хватает средств для снятия. '
                   f'Баланс кошелька: {valid_wallet.balance}'
+    }
+
+
+@pytest.mark.asyncio
+async def test_deposit_wallet(
+        api_url: str,
+        client: AsyncClient,
+        test_wallet,
+        valid_wallet: Wallet
+):
+    """Тест на пополнение существующего кошелька."""
+    response = await client.post(
+        f'{api_url}/{valid_wallet.uuid}/operation',
+        json={
+            "operationType": "DEPOSIT",
+            "amount": 1
+        }
+    )
+    assert response.status_code == HTTPStatus.OK
+    assert response.json() == {
+        "id": valid_wallet.id,
+        "uuid": valid_wallet.uuid,
+        "balance": valid_wallet.balance + 1
+    }
+
+
+@pytest.mark.asyncio
+async def test_deposit_wallet_not_found(
+        api_url: str,
+        client: AsyncClient,
+        test_wallet,
+        valid_wallet: Wallet
+):
+    """Тест на пополнение не существующего кошелька."""
+    response = await client.post(
+        f'{api_url}/00000000-0000-0000-0000-000000000000/operation',
+        json={
+            "operationType": "DEPOSIT",
+            "amount": 1
+        }
+    )
+    assert response.status_code == HTTPStatus.NOT_FOUND
+    assert response.json() == {
+        "detail": "Кошелёк не найден!"
     }
