@@ -1,3 +1,5 @@
+from http import HTTPStatus
+
 import pytest
 from httpx import AsyncClient
 
@@ -13,7 +15,7 @@ async def test_get_wallet_balance(
 ):
     """Тест на получение баланса существующего кошелька."""
     response = await client.get(f'{api_url}/{valid_wallet.uuid}')
-    assert response.status_code == 200
+    assert response.status_code == HTTPStatus.OK
     assert response.json() == {
         "id": valid_wallet.id,
         "uuid": valid_wallet.uuid,
@@ -29,7 +31,7 @@ async def test_get_wallet_balance_not_found(
     """Тест на получение баланса несуществующего кошелька."""
     non_existent_uuid = '00000000-0000-0000-0000-000000000000'
     response = await client.get(f'{api_url}/{non_existent_uuid}')
-    assert response.status_code == 404
+    assert response.status_code == HTTPStatus.NOT_FOUND
     assert response.json() == {
         "detail": "Кошелёк не найден!"
     }
