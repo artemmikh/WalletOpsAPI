@@ -10,7 +10,7 @@ router = APIRouter()
 
 
 @router.get(
-    '/{WALLET_UUID}',
+    '/{wallet_uuid}',
     response_model=WalletDB
 )
 async def get_wallet_balance(
@@ -22,7 +22,7 @@ async def get_wallet_balance(
 
 
 @router.post(
-    '/{WALLET_UUID}/operation',
+    '/{wallet_uuid}/operation',
     response_model=WalletDB
 )
 async def change_wallet_balance(
