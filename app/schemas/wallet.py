@@ -6,7 +6,7 @@ from pydantic import BaseModel
 class WalletDB(BaseModel):
     id: int
     uuid: str
-    balance: int
+    balance: float
 
     class Config:
         orm_mode = True
