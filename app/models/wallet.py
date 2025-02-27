@@ -9,7 +9,6 @@ class Wallet(Base):
     """Модель кошелька."""
     uuid = Column(
         String(36),
-        primary_key=True,
         default=lambda: str(uuid.uuid4()))
     balance = Column(
         Float,
