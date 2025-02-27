@@ -16,7 +16,3 @@ main_router.include_router(
     tags=['Wallet Operations'])
 
 app.include_router(main_router)
-
-if __name__ == '__main__':
-    """Запуск FastAPI приложения в режиме разработки с авто перезагрузкой."""
-    uvicorn.run('main:app', reload=True)
