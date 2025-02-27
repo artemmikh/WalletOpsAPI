@@ -1,3 +1,5 @@
+from typing import Optional, Type, Any
+
 from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -6,15 +8,17 @@ from app.models.wallet import Wallet
 
 
 class CRUDWallet:
+    """CRUD операции для модели Wallet."""
 
-    def __init__(self, model):
+    def __init__(self, model: Type[Wallet]):
         self.model = model
 
     async def get(
             self,
             obj_id: int,
             session: AsyncSession,
-    ):
+    ) -> Optional[Wallet]:
+        """Получить кошелек по ID."""
         db_obj = await session.execute(
             select(self.model).where(
                 self.model.id == obj_id
@@ -24,9 +28,10 @@ class CRUDWallet:
 
     async def get_by_uuid(
             self,
-            uuid: int,
+            uuid: str,
             session: AsyncSession,
-    ):
+    ) -> Optional[Wallet]:
+        """Получить кошелек по UUID."""
         wallet = await session.execute(
             select(self.model).where(
                 self.model.uuid == uuid
@@ -36,9 +41,10 @@ class CRUDWallet:
 
     async def create(
             self,
-            obj_in,
+            obj_in: Any,
             session: AsyncSession,
-    ):
+    ) -> Wallet:
+        """Создать новый кошелек."""
         obj_in_data = obj_in.dict()
         db_obj = self.model(**obj_in_data)
         session.add(db_obj)
@@ -48,10 +54,11 @@ class CRUDWallet:
 
     async def update_balance(
             self,
-            db_obj,
-            obj_in,
+            db_obj: Wallet,
+            obj_in: Any,
             session: AsyncSession,
-    ):
+    ) -> Optional[Wallet]:
+        """Обновить баланс кошелька."""
         try:
             stmt = select(self.model).where(
                 self.model.uuid == db_obj.uuid).with_for_update()

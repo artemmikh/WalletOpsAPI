@@ -5,6 +5,7 @@ load_dotenv()
 
 
 class Settings(BaseSettings):
+    """Настройки приложения."""
     app_title: str = 'WalletOpsAPI'
     api_version: str = '1'
     app_description: str = ('Приложение для управления '
@@ -17,5 +18,3 @@ class Settings(BaseSettings):
 
 
 settings = Settings()
-
-print(settings.api_version)

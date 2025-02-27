@@ -6,6 +6,7 @@ from app.core.db import Base
 
 
 class Wallet(Base):
+    """Модель кошелька."""
     uuid = Column(
         String(36),
         primary_key=True,

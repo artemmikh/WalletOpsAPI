@@ -16,9 +16,9 @@ router = APIRouter()
 async def get_wallet_balance(
         wallet_uuid,
         session: AsyncSession = Depends(get_async_session)
-):
-    wallet = await check_wallet_exists(wallet_uuid, session)
-    return wallet
+) -> WalletDB:
+    """Получить баланс кошелька по его UUID."""
+    return await check_wallet_exists(wallet_uuid, session)
 
 
 @router.post(
@@ -31,7 +31,8 @@ async def change_wallet_balance(
             ..., examples=WalletOperation.Config.schema_extra['examples']
         ),
         session: AsyncSession = Depends(get_async_session)
-):
+) -> WalletDB:
+    """Изменить баланс кошелька (пополнение или снятие)."""
     wallet = await check_wallet_exists(wallet_uuid, session)
     operation_type = operation.operationType
     if operation_type == 'WITHDRAW':

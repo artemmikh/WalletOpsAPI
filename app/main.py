@@ -18,5 +18,5 @@ main_router.include_router(
 app.include_router(main_router)
 
 if __name__ == '__main__':
-    # для запуска приложения в debug режиме
+    """Запуск FastAPI приложения в режиме разработки с авто перезагрузкой."""
     uvicorn.run('main:app', reload=True)

@@ -4,6 +4,7 @@ from pydantic import BaseModel
 
 
 class WalletDB(BaseModel):
+    """Модель данных кошелька."""
     id: int
     uuid: str
     balance: float
@@ -13,11 +14,13 @@ class WalletDB(BaseModel):
 
 
 class OperationType(str, Enum):
+    """Тип операции с кошельком."""
     DEPOSIT = 'DEPOSIT'
     WITHDRAW = 'WITHDRAW'
 
 
 class WalletOperation(BaseModel):
+    """Модель операции с кошельком."""
     operationType: OperationType
     amount: float
 
