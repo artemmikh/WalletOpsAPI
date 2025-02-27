@@ -38,3 +38,14 @@ async def change_wallet_balance(
     if operation_type == 'WITHDRAW':
         await check_wallet_balance(operation.amount, wallet)
     return await wallet_crud.update_balance(wallet, operation, session)
+
+
+@router.post(
+    '/',
+    response_model=WalletDB,
+)
+async def create_wallet(
+        session: AsyncSession = Depends(get_async_session)
+):
+    """Создать новый кошелёк с нулевым балансом."""
+    return await wallet_crud.create(session)
