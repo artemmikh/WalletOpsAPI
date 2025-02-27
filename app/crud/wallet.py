@@ -55,5 +55,16 @@ class CRUDWallet:
             await session.rollback()
             raise ValueError('Ошибка конкурентного доступа')
 
+    async def create(
+            self,
+            session: AsyncSession,
+    ) -> Wallet:
+        """Создать новый кошелек."""
+        db_obj = self.model()
+        session.add(db_obj)
+        await session.commit()
+        await session.refresh(db_obj)
+        return db_obj
+
 
 wallet_crud = CRUDWallet(Wallet)
