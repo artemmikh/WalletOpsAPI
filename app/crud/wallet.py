@@ -1,5 +1,5 @@
-from fastapi.encoders import jsonable_encoder
 from sqlalchemy import select
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models.wallet import Wallet
@@ -52,17 +52,27 @@ class CRUDWallet:
             obj_in,
             session: AsyncSession,
     ):
+        try:
+            stmt = select(self.model).where(
+                self.model.uuid == db_obj.uuid).with_for_update()
+            result = await session.execute(stmt)
+            wallet = result.scalars().first()
 
-        if obj_in.operationType == 'DEPOSIT':
-            new_balance = db_obj.balance + obj_in.amount
-        if obj_in.operationType == 'WITHDRAW':
-            new_balance = db_obj.balance - obj_in.amount
+            if not wallet:
+                return None
 
-        setattr(db_obj, 'balance', new_balance)
-        session.add(db_obj)
-        await session.commit()
-        await session.refresh(db_obj)
-        return db_obj
+            if obj_in.operationType == 'DEPOSIT':
+                wallet.balance += obj_in.amount
+            elif obj_in.operationType == 'WITHDRAW':
+                wallet.balance -= obj_in.amount
+
+            session.add(wallet)
+            await session.commit()
+            await session.refresh(wallet)
+            return wallet
+        except IntegrityError:
+            await session.rollback()
+            raise ValueError('Ошибка конкурентного доступа')
 
 
 wallet_crud = CRUDWallet(Wallet)
