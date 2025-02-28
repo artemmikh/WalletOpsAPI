@@ -10,7 +10,7 @@ class Settings(BaseSettings):
     api_version: str = '1'
     app_description: str = ('Приложение для управления '
                             'балансами виртуальных кошельков.')
-    database_url: str = 'sqlite+aiosqlite:///./wallet.db'
+    database_url: str = 'sqlite+aiosqlite:///./app/data/wallet.db'
     test_database_url: str = 'sqlite+aiosqlite:///:memory:'
 
     class Config:
