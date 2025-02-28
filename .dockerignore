@@ -1,0 +1,6 @@
+.venv
+venv
+.git
+.idea
+.env
+wallet.db
