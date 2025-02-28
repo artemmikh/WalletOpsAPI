@@ -12,6 +12,9 @@ class Settings(BaseSettings):
                             'балансами виртуальных кошельков.')
     database_url: str = 'sqlite+aiosqlite:///./app/data/wallet.db'
     test_database_url: str = 'sqlite+aiosqlite:///:memory:'
+    postgres_user = 'example'
+    postgres_password = 'example'
+    postgres_db = 'example'
 
     class Config:
         env_file = '.env'
